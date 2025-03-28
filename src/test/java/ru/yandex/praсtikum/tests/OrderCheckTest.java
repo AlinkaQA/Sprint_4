@@ -60,7 +60,7 @@ public class OrderCheckTest {
         this.comment = comment;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}") // Улучшение: добавлен name для информативности
     public static Object[][] getParameters() {
         return new Object[][]{
                 {UP_BUTTON, "Иван", "Иванов", "ул. Тверская, д. 15", "7", "79292058292", "14.07.2023", FIVE_DAYS, ScooterColor.GREY, "comments three"},
@@ -84,6 +84,7 @@ public class OrderCheckTest {
             driver = new FirefoxDriver();
         }
 
+        driver.manage().window().maximize(); // Улучшение: браузер запускается в полноэкранном режиме
         driver.get(site);
     }
 

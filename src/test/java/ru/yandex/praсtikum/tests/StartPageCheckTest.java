@@ -49,8 +49,9 @@ public class StartPageCheckTest {
     public void startUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize(); // Улучшение: браузер запускается в полноэкранном режиме
         driver.get(site);
-        startPage = new StartPage(driver); // Инициализация Page Object с WebDriver
+        startPage = new StartPage(driver);
     }
 
     @After
@@ -60,13 +61,14 @@ public class StartPageCheckTest {
 
     @Test
     public void checkQuestions() {
-        startPage
+        String actualAnswerText = startPage
                 .waitForLoadHomePage()
+                .clickCookiesButton()
                 .scrollToQuestions()
                 .clickQuestion(questionLocator)
-                .waitLoadAfterClickQuestion(answerItemLocator);
+                .waitLoadAfterClickQuestion(answerItemLocator)
+                .getAnswerText(answerLocator);
 
-        String actualAnswerText = driver.findElement(answerLocator).getText();
         assertEquals(expectedAnswerText, actualAnswerText);
     }
 }

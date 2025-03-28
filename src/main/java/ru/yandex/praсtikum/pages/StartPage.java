@@ -139,6 +139,11 @@ public class StartPage {
         return this;
     }
 
+    // Метод получения текста ответа
+    public String getAnswerText(By answerLocator) {
+        return driver.findElement(answerLocator).getText();
+    }
+
     // Геттеры для локаторов и текстов
     public By getCostQuestion() { return costQuestion; }
     public By getMultipleScootersQuestion() { return multipleScootersQuestion; }
