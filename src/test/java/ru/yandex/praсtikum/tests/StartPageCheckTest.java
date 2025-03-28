@@ -12,36 +12,36 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import ru.yandex.praсtikum.pages.StartPage;
 
 import static org.junit.Assert.assertEquals;
-import static ru.yandex.praсtikum.pages.constants.StartPageValues.*;
 
 @RunWith(Parameterized.class)
 public class StartPageCheckTest {
-
     private WebDriver driver;
     private final String site = "https://qa-scooter.praktikum-services.ru/";
-    private final By question;
-    private final By answer;
-    private final By labelResult;
-    private final String expected;
+    private final By questionLocator;
+    private final By answerLocator;
+    private final By answerItemLocator;
+    private final String expectedAnswerText;
+    private StartPage startPage;
 
-    public StartPageCheckTest(By question, By answer, By labelResult, String expected) {
-        this.question = question;
-        this.answer = answer;
-        this.labelResult = labelResult;
-        this.expected = expected;
+    public StartPageCheckTest(By questionLocator, By answerLocator, By answerItemLocator, String expectedAnswerText) {
+        this.questionLocator = questionLocator;
+        this.answerLocator = answerLocator;
+        this.answerItemLocator = answerItemLocator;
+        this.expectedAnswerText = expectedAnswerText;
     }
 
     @Parameterized.Parameters
     public static Object[][] getParameters() {
+        StartPage page = new StartPage(null); // null, так как WebDriver еще не инициализирован
         return new Object[][]{
-                {QUESTION_0, ANSWER_0, ITEM_ANSWER_0, TEXT_ANSWER_0},
-                {QUESTION_1, ANSWER_1, ITEM_ANSWER_1, TEXT_ANSWER_1},
-                {QUESTION_2, ANSWER_2, ITEM_ANSWER_2, TEXT_ANSWER_2},
-                {QUESTION_3, ANSWER_3, ITEM_ANSWER_3, TEXT_ANSWER_3},
-                {QUESTION_4, ANSWER_4, ITEM_ANSWER_4, TEXT_ANSWER_4},
-                {QUESTION_5, ANSWER_5, ITEM_ANSWER_5, TEXT_ANSWER_5},
-                {QUESTION_6, ANSWER_6, ITEM_ANSWER_6, TEXT_ANSWER_6},
-                {QUESTION_7, ANSWER_7, ITEM_ANSWER_7, TEXT_ANSWER_7},
+                {page.getCostQuestion(), page.getCostAnswer(), page.getCostAnswerItem(), page.getCostAnswerText()},
+                {page.getMultipleScootersQuestion(), page.getMultipleScootersAnswer(), page.getMultipleScootersAnswerItem(), page.getMultipleScootersAnswerText()},
+                {page.getRentalTimeQuestion(), page.getRentalTimeAnswer(), page.getRentalTimeAnswerItem(), page.getRentalTimeAnswerText()},
+                {page.getSameDayDeliveryQuestion(), page.getSameDayDeliveryAnswer(), page.getSameDayDeliveryAnswerItem(), page.getSameDayDeliveryAnswerText()},
+                {page.getOrderChangeQuestion(), page.getOrderChangeAnswer(), page.getOrderChangeAnswerItem(), page.getOrderChangeAnswerText()},
+                {page.getBatteryLifeQuestion(), page.getBatteryLifeAnswer(), page.getBatteryLifeAnswerItem(), page.getBatteryLifeAnswerText()},
+                {page.getCancellationQuestion(), page.getCancellationAnswer(), page.getCancellationAnswerItem(), page.getCancellationAnswerText()},
+                {page.getDeliveryAreaQuestion(), page.getDeliveryAreaAnswer(), page.getDeliveryAreaAnswerItem(), page.getDeliveryAreaAnswerText()}
         };
     }
 
@@ -50,24 +50,23 @@ public class StartPageCheckTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get(site);
+        startPage = new StartPage(driver); // Инициализация Page Object с WebDriver
     }
-
 
     @After
     public void teardown() {
-
         driver.quit();
     }
 
     @Test
     public void checkQuestions() {
-        new StartPage(driver)
+        startPage
                 .waitForLoadHomePage()
                 .scrollToQuestions()
-                .clickQuestion(question)
-                .waitLoadAfterClickQuestion(labelResult);
-        String result = driver.findElement(answer).getText();
+                .clickQuestion(questionLocator)
+                .waitLoadAfterClickQuestion(answerItemLocator);
 
-        assertEquals(expected, result);
+        String actualAnswerText = driver.findElement(answerLocator).getText();
+        assertEquals(expectedAnswerText, actualAnswerText);
     }
 }

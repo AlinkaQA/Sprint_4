@@ -6,9 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
-import static ru.yandex.praсtikum.pages.constants.ScooterColor.BLACK;
-import static ru.yandex.praсtikum.pages.constants.ScooterColor.GREY;
+import static ru.yandex.praсtikum.pages.constants.ScooterColor.*;
 
 public class ScooterInfoPage {
     private final By rentHeader = By.className("Order_Header__BZXOb");
@@ -62,5 +60,5 @@ public class ScooterInfoPage {
     public void clickButtonCreateOrder() {
         driver.findElement(createOrderButton).click();
     }
-
 }
+
