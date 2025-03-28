@@ -9,7 +9,7 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.yandex.praсtikum.pages.ScooterInfo;
+import ru.yandex.praсtikum.pages.ScooterInfoPage;
 import ru.yandex.praсtikum.pages.StartPage;
 import ru.yandex.praсtikum.pages.StartPoint;
 import ru.yandex.praсtikum.pages.UserInfo;
@@ -21,7 +21,7 @@ import static ru.yandex.praсtikum.pages.constants.OrderButton.UP_BUTTON;
 import static ru.yandex.praсtikum.pages.constants.RentTime.*;
 
 @RunWith(Parameterized.class)
-public class OrderCheck {
+public class OrderCheckTest {
 
     private WebDriver driver;
     private final String site = "https://qa-scooter.praktikum-services.ru/";
@@ -37,16 +37,16 @@ public class OrderCheck {
     private final String expectedHeader = "Заказ оформлен";
     private final OrderButton button;
 
-    public OrderCheck(OrderButton button,
-                      String name,
-                      String surname,
-                      String address,
-                      String stateMetroNumber,
-                      String telephoneNumber,
-                      String date,
-                      String duration,
-                      ScooterColor colour,
-                      String comment) {
+    public OrderCheckTest(OrderButton button,
+                          String name,
+                          String surname,
+                          String address,
+                          String stateMetroNumber,
+                          String telephoneNumber,
+                          String date,
+                          String duration,
+                          ScooterColor colour,
+                          String comment) {
         this.button = button;
         this.name = name;
         this.surname = surname;
@@ -110,7 +110,7 @@ public class OrderCheck {
                 .clickNextButton();
 
 
-        new ScooterInfo(driver)
+        new ScooterInfoPage(driver)
                 .waitAboutRentHeader()
                 .inputDate(date)
                 .inputDuration(duration)

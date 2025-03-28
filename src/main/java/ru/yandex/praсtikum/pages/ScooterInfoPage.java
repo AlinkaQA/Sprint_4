@@ -10,7 +10,7 @@ import java.time.Duration;
 import static ru.yandex.praсtikum.pages.constants.ScooterColor.BLACK;
 import static ru.yandex.praсtikum.pages.constants.ScooterColor.GREY;
 
-public class ScooterInfo {
+public class ScooterInfoPage {
     private final By rentHeader = By.className("Order_Header__BZXOb");
     private final By date = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     private final By durationRent = By.xpath(".//span[@class='Dropdown-arrow']");
@@ -21,12 +21,12 @@ public class ScooterInfo {
     private final By scooterButton = By.xpath(".//*[@alt='Scooter']");
     WebDriver driver;
 
-    public ScooterInfo(WebDriver driver) {
+    public ScooterInfoPage(WebDriver driver) {
         this.driver = driver;
     }
 
     //метод ожидания загрузки страницы
-    public ScooterInfo waitAboutRentHeader() {
+    public ScooterInfoPage waitAboutRentHeader() {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver -> {
             driver.findElement(rentHeader).getText();
             return !driver.findElement(rentHeader).getText().isEmpty();
@@ -34,18 +34,18 @@ public class ScooterInfo {
         return this;
     }
 
-    public ScooterInfo inputDate(String newDate) {
+    public ScooterInfoPage inputDate(String newDate) {
         driver.findElement(date).sendKeys(newDate);
         return this;
     }
 
-    public ScooterInfo inputDuration(String newDuration) {
+    public ScooterInfoPage inputDuration(String newDuration) {
         driver.findElement(durationRent).click();
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.elementToBeClickable(By.className("Dropdown-menu"))).click();
         return this;
     }
 
-    public ScooterInfo changeColour(Enum colour) {
+    public ScooterInfoPage changeColour(Enum colour) {
         if (colour.equals(BLACK)) {
             driver.findElement(colourBlack).click();
         } else if (colour.equals(GREY)) {
@@ -54,7 +54,7 @@ public class ScooterInfo {
         return this;
     }
 
-    public ScooterInfo inputComment(String newComment) {
+    public ScooterInfoPage inputComment(String newComment) {
         driver.findElement(comment).sendKeys(newComment);
         return this;
     }

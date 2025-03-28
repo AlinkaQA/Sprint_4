@@ -9,14 +9,13 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.yandex.praсtikum.pages.StartPage;
 
 import static org.junit.Assert.assertEquals;
 import static ru.yandex.praсtikum.pages.constants.StartPageValues.*;
 
 @RunWith(Parameterized.class)
-public class StartPageCheck {
+public class StartPageCheckTest {
 
     private WebDriver driver;
     private final String site = "https://qa-scooter.praktikum-services.ru/";
@@ -25,7 +24,7 @@ public class StartPageCheck {
     private final By labelResult;
     private final String expected;
 
-    public StartPageCheck (By question, By answer, By labelResult, String expected) {
+    public StartPageCheckTest(By question, By answer, By labelResult, String expected) {
         this.question = question;
         this.answer = answer;
         this.labelResult = labelResult;
