@@ -11,8 +11,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.yandex.praсtikum.pages.ScooterInfoPage;
 import ru.yandex.praсtikum.pages.StartPage;
-import ru.yandex.praсtikum.pages.StartPoint;
-import ru.yandex.praсtikum.pages.UserInfo;
+import ru.yandex.praсtikum.pages.StartPointPage;
+import ru.yandex.praсtikum.pages.UserInfoPage;
 import ru.yandex.praсtikum.pages.constants.OrderButton;
 import ru.yandex.praсtikum.pages.constants.ScooterColor;
 
@@ -102,7 +102,7 @@ public class OrderCheckTest {
                 .clickCookiesButton()
                 .clickCreateOrderButton(button);
 
-        new UserInfo(driver)
+        new UserInfoPage(driver)
                 .waitForLoadOrderPage()
                 .inputName(name)
                 .inputSurname(surname)
@@ -119,9 +119,9 @@ public class OrderCheckTest {
                 .inputComment(comment)
                 .clickButtonCreateOrder();
 
-        StartPoint startPoint = new StartPoint(driver);
-        startPoint.clickButtonYes();
+        StartPointPage startPointPage = new StartPointPage(driver);
+        startPointPage.clickButtonYes();
 
-        assertTrue(startPoint.getHeaderAfterCreateOrder().contains(expectedHeader));
+        assertTrue(startPointPage.getHeaderAfterCreateOrder().contains(expectedHeader));
     }
 }

@@ -7,12 +7,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class StartPoint {
+public class StartPointPage {
     private final By popUpHeaderAfterCreateOrder = By.xpath(".//div[text()='Заказ оформлен']");
     private final By buttonYes = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
     WebDriver driver;
 
-    public StartPoint(WebDriver driver) {
+    public StartPointPage(WebDriver driver) {
         this.driver = driver;
     }
 

@@ -18,30 +18,25 @@ public class StartPageCheckTest {
     private WebDriver driver;
     private final String site = "https://qa-scooter.praktikum-services.ru/";
     private final By questionLocator;
-    private final By answerLocator;
-    private final By answerItemLocator;
     private final String expectedAnswerText;
     private StartPage startPage;
 
-    public StartPageCheckTest(By questionLocator, By answerLocator, By answerItemLocator, String expectedAnswerText) {
+    public StartPageCheckTest(By questionLocator, String expectedAnswerText) {
         this.questionLocator = questionLocator;
-        this.answerLocator = answerLocator;
-        this.answerItemLocator = answerItemLocator;
         this.expectedAnswerText = expectedAnswerText;
     }
 
     @Parameterized.Parameters
     public static Object[][] getParameters() {
-        StartPage page = new StartPage(null); // null, так как WebDriver еще не инициализирован
         return new Object[][]{
-                {page.getCostQuestion(), page.getCostAnswer(), page.getCostAnswerItem(), page.getCostAnswerText()},
-                {page.getMultipleScootersQuestion(), page.getMultipleScootersAnswer(), page.getMultipleScootersAnswerItem(), page.getMultipleScootersAnswerText()},
-                {page.getRentalTimeQuestion(), page.getRentalTimeAnswer(), page.getRentalTimeAnswerItem(), page.getRentalTimeAnswerText()},
-                {page.getSameDayDeliveryQuestion(), page.getSameDayDeliveryAnswer(), page.getSameDayDeliveryAnswerItem(), page.getSameDayDeliveryAnswerText()},
-                {page.getOrderChangeQuestion(), page.getOrderChangeAnswer(), page.getOrderChangeAnswerItem(), page.getOrderChangeAnswerText()},
-                {page.getBatteryLifeQuestion(), page.getBatteryLifeAnswer(), page.getBatteryLifeAnswerItem(), page.getBatteryLifeAnswerText()},
-                {page.getCancellationQuestion(), page.getCancellationAnswer(), page.getCancellationAnswerItem(), page.getCancellationAnswerText()},
-                {page.getDeliveryAreaQuestion(), page.getDeliveryAreaAnswer(), page.getDeliveryAreaAnswerItem(), page.getDeliveryAreaAnswerText()}
+                {StartPage.COST_QUESTION, StartPage.COST_ANSWER_TEXT},
+                {StartPage.MULTIPLE_SCOOTERS_QUESTION, StartPage.MULTIPLE_SCOOTERS_ANSWER_TEXT},
+                {StartPage.RENTAL_TIME_QUESTION, StartPage.RENTAL_TIME_ANSWER_TEXT},
+                {StartPage.SAME_DAY_DELIVERY_QUESTION, StartPage.SAME_DAY_DELIVERY_ANSWER_TEXT},
+                {StartPage.ORDER_CHANGE_QUESTION, StartPage.ORDER_CHANGE_ANSWER_TEXT},
+                {StartPage.BATTERY_LIFE_QUESTION, StartPage.BATTERY_LIFE_ANSWER_TEXT},
+                {StartPage.CANCELLATION_QUESTION, StartPage.CANCELLATION_ANSWER_TEXT},
+                {StartPage.DELIVERY_AREA_QUESTION, StartPage.DELIVERY_AREA_ANSWER_TEXT}
         };
     }
 
@@ -49,7 +44,7 @@ public class StartPageCheckTest {
     public void startUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().window().maximize(); // Улучшение: браузер запускается в полноэкранном режиме
+        driver.manage().window().maximize();
         driver.get(site);
         startPage = new StartPage(driver);
     }
@@ -66,9 +61,9 @@ public class StartPageCheckTest {
                 .clickCookiesButton()
                 .scrollToQuestions()
                 .clickQuestion(questionLocator)
-                .waitLoadAfterClickQuestion(answerItemLocator)
-                .getAnswerText(answerLocator);
+                .getAnswerText(questionLocator);  // Получаем текст ответа, передавая локатор вопроса
 
         assertEquals(expectedAnswerText, actualAnswerText);
     }
 }
+
